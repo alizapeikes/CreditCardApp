@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class CreditCard {
 	private String creditCardID;
@@ -13,8 +15,8 @@ public class CreditCard {
 	
 	public void addPurchase(Purchase purchase) {
 		transactions.add(purchase);
-		currentBalace+=purchase.getAmount()//Do we have a getter for this? Does this get calculated here?
-		availCredi-=purchase.getAmount()//same with this- should we make a method for these two?
+		currentBalance+=purchase.getAmount()//Do we have a getter for this? Does this get calculated here?
+		availCredit-=purchase.getAmount()//same with this- should we make a method for these two?
 	}
 	
 	public void addPayment(Payment payment) {
@@ -25,7 +27,7 @@ public class CreditCard {
 	
 	public void addFee(Fee fee) {
 		transactions.add(purchase);
-		currentBalace+=fee.getAmount()//same comments as above
+		currentBalance+=fee.getAmount()//same comments as above
 		availCredit-=fee.getAmount()
 	}
 	
