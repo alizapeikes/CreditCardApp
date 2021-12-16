@@ -1,4 +1,2 @@
 
-public enum PaymentType {
-
-}
+public enum PaymentType {CHECK,ONLINE}
