@@ -49,18 +49,19 @@ public class CreditCards {
 		throw new NoSuchCardException();
 	}
 	
-	public void addPurchase(String cardID, double amount) {
+	public void addPurchase(String cardID, double amount, PurchaseType purchaseType, Vendor vendor) {
 		CreditCard card = findCard(cardID);
-		Purchase purchase = new Purchase(amount, purchaseType, vendor);
-		card.addPurchase(amount);
+		card.addPurchase(new Purchase(amount, purchaseType, vendor));
 	}
 	
-	public void addFee() {
-		
+	public void addFee(String cardID, FeeType feeType, double amount) {
+		CreditCard card = findCard(cardID);
+		card.addFee(new Fee(feeType, amount));
 	}
 	
-	public void addPayment() {
-		
+	public void addPayment(String cardID, double amount, PaymentType paymentType, BankAccount account) {
+		CreditCard card = findCard(cardID);
+		card.addPayment(new Payment(amount, paymentType, account));
 	}
 
 }
