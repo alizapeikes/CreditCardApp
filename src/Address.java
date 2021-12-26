@@ -5,10 +5,10 @@ public class Address {
 	private USState state;
 	private String zipCode;
 	
-	public Address(String street, String city, USState state, String zipCode) {
+	public Address(String street, String city, String state, String zipCode) {
 		this.street = street;
 		this.city = city;
-		this.state = state;
+		this.state = USState.valueOf(state);
 		this.zipCode = zipCode;
 	}
 	

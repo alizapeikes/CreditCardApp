@@ -12,10 +12,10 @@ public class CreditCard {
 	private double availCredit;
 	private ArrayList<Transaction> transactions;
 	
-	public CreditCard(String creditCardID, String issueDate, CreditCardType creditCardType, double creditCardLimit) {
+	public CreditCard(String creditCardID, String issueDate, String creditCardType, double creditCardLimit) {
 		this.creditCardID = creditCardID;
 		this.issueDate = LocalDate.parse(issueDate);
-		this.creditCardType = creditCardType;
+		this.creditCardType = CreditCardType.valueOf(creditCardType);
 		//Assuming you are only inserting credit cards that are active
 		this.status = CreditCardStatus.ACTIVE;
 		this.creditCardLimit = creditCardLimit;
@@ -24,20 +24,20 @@ public class CreditCard {
 		transactions = new ArrayList<>();
 
 	}
-	
-	public void addPurchase(Purchase purchase) {
-		transactions.add(purchase);
-		update(purchase.getAmount());
+
+	public void addPurchase(double amount, PurchaseType type, String vendorName, String street, String city, String state, String zipcode) {
+		transactions.add(new Purchase(amount, type, vendorName, street, city, state, zipcode));
+		update(amount);
 	}
 	
-	public void addPayment(Payment payment) {
-		transactions.add(payment);
-		update(-payment.getAmount());
+	public void addPayment(double amount, PaymentType paymentType, String bankName, String accountID) {
+		transactions.add(new Payment(amount, paymentType, bankName, accountID));
+		update(-amount);
 	}
 	
-	public void addFee(Fee fee) {
-		transactions.add(fee);
-		update(fee.getAmount());
+	public void addFee(FeeType feeType, double amount) {
+		transactions.add(new Fee(feeType, amount));
+		update(amount);
 	}
 	
 	public void update(double amount) {
@@ -89,7 +89,7 @@ public class CreditCard {
 		return (Payment)getMostRecent(TransactionType.PAYMENT);
 	}
 	
-	public Transaction getMostRecent(TransactionType transactionType) {
+	private Transaction getMostRecent(TransactionType transactionType) {
 		LocalDate mostRecent = LocalDate.MIN;
 		int recentIndex = - 1;
 		for(int i = 1; i < transactions.size(); i++) {
@@ -105,6 +105,15 @@ public class CreditCard {
 		}else {
 			return transactions.get(recentIndex);
 		}
+	}
+	public double getTotalPerType(PurchaseType purchaseType) {
+		double sum = 0;
+		for(Transaction transaction: transactions) {
+			if(transaction.getTransactionType() == TransactionType.PURCHASE && purchaseType == ((Purchase)transaction).getType()) {
+				sum+=transaction.getAmount();
+			}
+		}
+		return sum;
 	}
 
 	@Override
@@ -127,5 +136,13 @@ public class CreditCard {
 	public String getID() {
 		return creditCardID;
 	}
+
+	public double getCreditCardLimit() {
+		return creditCardLimit;
+	}
+
+
+
+	
 	
 }

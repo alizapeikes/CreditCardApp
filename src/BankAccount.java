@@ -7,4 +7,11 @@ public class BankAccount {
 		this.bankName = bankName;
 		this.accountID = accountID;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append("Name: " + bankName + " AccountID: " + accountID);
+		return str.toString();
+	}
 }

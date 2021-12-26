@@ -1,2 +1,2 @@
 
-public enum FeeType {LATE_PAYMENT, INTREST }
+public enum FeeType {LATE_PAYMENT, INTEREST }

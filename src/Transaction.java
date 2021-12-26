@@ -76,6 +76,12 @@ public class Transaction {
 		this.amount = amount;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append("Date: " + transactionDate + " Amount: " + amount);
+		return str.toString();
+	}
 	
 	
 	
