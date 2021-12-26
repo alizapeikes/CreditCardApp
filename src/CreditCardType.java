@@ -1,2 +1,2 @@
 
-public enum CreditCardType {VISA, MASTERCARD, AMEX}
+public enum CreditCardType {VISA, MASTERCARD, AMEX, DISCOVER}
