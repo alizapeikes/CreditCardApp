@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 import java.util.*;
-public class Purchase extends Transaction{
+public class Purchase extends Transaction {
 	
 	private PurchaseType purchaseType;
 	private Vendor vendor;
@@ -30,7 +30,7 @@ public class Purchase extends Transaction{
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append(super.toString() + "Purchase type: " + purchaseType + "\nVendor Information: " + vendor);
+		str.append(super.toString() + " Purchase type: " + purchaseType + "\nVendor Information:\n" + vendor);
 		return str.toString();
 	}
 }

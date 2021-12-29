@@ -25,7 +25,21 @@ public class CreditCard {
 
 	}
 
+	public CreditCard(CreditCard c) {
+		this.creditCardID = c.creditCardID;
+		this.issueDate = c.issueDate;
+		this.creditCardType = c.creditCardType;
+		this.status = c.status;
+		this.creditCardLimit = c.creditCardLimit;
+		this.currentBalance = c.currentBalance;
+		this.availCredit = c.creditCardLimit;
+		this.transactions = new ArrayList<>(c.transactions);
+	}
+
 	public void addPurchase(double amount, PurchaseType type, String vendorName, String street, String city, String state, String zipcode) {
+		if (amount <= 0 || amount > availCredit) {
+			throw new InvalidAmountException();
+		}
 		transactions.add(new Purchase(amount, type, vendorName, street, city, state, zipcode));
 		update(amount);
 	}
@@ -92,7 +106,7 @@ public class CreditCard {
 	private Transaction getMostRecent(TransactionType transactionType) {
 		LocalDate mostRecent = LocalDate.MIN;
 		int recentIndex = - 1;
-		for(int i = 1; i < transactions.size(); i++) {
+		for(int i = 0; i < transactions.size(); i++) {
 			if(transactions.get(i).getTransactionType() == transactionType) {
 				if(transactions.get(i).getTransactionDate().isAfter(mostRecent)) {
 					mostRecent = transactions.get(i).getTransactionDate();
@@ -140,8 +154,21 @@ public class CreditCard {
 	public double getCreditCardLimit() {
 		return creditCardLimit;
 	}
+	
+	public CreditCardStatus getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = CreditCardStatus.valueOf(status);
+	}
 
-
+	@Override
+	public String toString() {
+		StringBuilder str = new StringBuilder();
+		str.append("Credit Card Number: "+creditCardID+" Current Balance: "+currentBalance+" Available credit: "+availCredit);
+		return str.toString();
+	}
 
 	
 	
