@@ -34,8 +34,8 @@ public class CreditCards {
 		return credit;
 	}
 	
-	public void addCard(String creditCardID,  String issueDate, String creditCardType, double creditCardLimit) {
-		CreditCard card = new CreditCard(creditCardID, issueDate, creditCardType, creditCardLimit);
+	public void addCard(String creditCardID,  String issueDate, String creditCardType, double creditCardLimit, String issueCompany) {
+		CreditCard card = new CreditCard(creditCardID, issueDate, creditCardType, creditCardLimit, issueCompany);
 		if (!cards.contains(card)) {
 			cards.add(card);
 		}
@@ -97,7 +97,7 @@ public class CreditCards {
 		card.addPayment(amount, paymentType, bankName, accountID);
 	}
 	
-	public Purchase getLargestPurchase() {
+	public String getLargestPurchase() {
 		if (cards.isEmpty()) {
 			throw new NoCardsExistException();
 		}
@@ -107,10 +107,10 @@ public class CreditCards {
 				largestPurchase = cards.get(i).getLargestPurchase();
 			}
 		}
-		return largestPurchase;
+		return largestPurchase.toString();
 	}
 	
-	public Payment getMostRecentPayment() {
+	public String getMostRecentPayment() {
 		if (cards.isEmpty()) {
 			throw new NoCardsExistException();
 		}
@@ -120,8 +120,9 @@ public class CreditCards {
 				mostRecent = cards.get(i).getMostRecentPayment();
 			}
 		}
-		return mostRecent;
+		return mostRecent.toString();
 	}
+	
 	public double getTotalPerType(PurchaseType purchaseType) {
 		if (cards.isEmpty()) {
 			throw new NoCardsExistException();
@@ -169,7 +170,7 @@ public class CreditCards {
 		return findCard(cardNumber).getMostRecentPayment().toString();
 	}
 	
-	public void setStatus(String cardNumber, String status) {
+	public void changeStatus(String cardNumber, CreditCardStatus status) {
 		findCard(cardNumber).setStatus(status);
 	}
 	

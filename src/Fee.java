@@ -7,6 +7,11 @@ public class Fee extends Transaction{
 		this.feeType = feeType;
 	}
 	
+	public Fee(Fee fee) {
+		super(fee);
+		this.feeType = fee.feeType;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();

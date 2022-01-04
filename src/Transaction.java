@@ -8,12 +8,18 @@ public class Transaction {
 	private double amount;
 	
 	public Transaction(LocalDate transactionDate, TransactionType transactionType, double amount ) {
-		//Do we need two separate variables????
 		lastTransactionID++;
 		transcationID = lastTransactionID;
 		this.transactionDate = transactionDate;
 		this.transactionType = transactionType;
 		this.amount = amount;
+	}
+	
+	public Transaction(Transaction transaction) {
+		this.transcationID = transaction.transcationID;
+		this.transactionDate = transaction.transactionDate;
+		this.transactionType = transaction.transactionType;
+		this.amount = transaction.amount;
 	}
 	/**
 	 * @return the transcationID

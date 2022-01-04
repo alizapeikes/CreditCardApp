@@ -10,6 +10,12 @@ public class Payment extends Transaction{
 		this.account = new BankAccount(bankName, accountID);
 	}
 	
+	public Payment(Payment payment) {
+		super(payment);
+		this.paymentType = payment.paymentType;
+		this.account = payment.account;
+	}
+	
 	public PaymentType getPaymentType() {
 		return paymentType;
 	}
@@ -18,7 +24,7 @@ public class Payment extends Transaction{
 	public String toString() {
 		StringBuilder str = new StringBuilder();
 		str.append(super.toString() + " Payment Type: " + paymentType);
-		str.append("\nAccount Information: "+account);
+		str.append("\nAccount Information: " + account);
 		return str.toString();
 	}
 }

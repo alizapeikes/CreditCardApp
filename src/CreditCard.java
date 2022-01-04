@@ -4,7 +4,8 @@ import java.util.ArrayList;
 public class CreditCard {
 	private String creditCardID;
 	private LocalDate issueDate;
-	//private issueCompany
+	private LocalDate expDate;
+	private String issueCompany;
 	private CreditCardType creditCardType;
 	private CreditCardStatus status;
 	private double creditCardLimit;
@@ -12,28 +13,18 @@ public class CreditCard {
 	private double availCredit;
 	private ArrayList<Transaction> transactions;
 	
-	public CreditCard(String creditCardID, String issueDate, String creditCardType, double creditCardLimit) {
+	public CreditCard(String creditCardID, String issueDate, String creditCardType, double creditCardLimit, String issueCompany) {
 		this.creditCardID = creditCardID;
 		this.issueDate = LocalDate.parse(issueDate);
+		this.expDate = this.issueDate.plusYears(3);
 		this.creditCardType = CreditCardType.valueOf(creditCardType);
 		//Assuming you are only inserting credit cards that are active
 		this.status = CreditCardStatus.ACTIVE;
 		this.creditCardLimit = creditCardLimit;
 		this.currentBalance = 0;
 		this.availCredit = creditCardLimit;
+		this.issueCompany = issueCompany;
 		transactions = new ArrayList<>();
-
-	}
-
-	public CreditCard(CreditCard c) {
-		this.creditCardID = c.creditCardID;
-		this.issueDate = c.issueDate;
-		this.creditCardType = c.creditCardType;
-		this.status = c.status;
-		this.creditCardLimit = c.creditCardLimit;
-		this.currentBalance = c.currentBalance;
-		this.availCredit = c.creditCardLimit;
-		this.transactions = new ArrayList<>(c.transactions);
 	}
 
 	public void addPurchase(double amount, PurchaseType type, String vendorName, String street, String city, String state, String zipcode) {
@@ -45,16 +36,25 @@ public class CreditCard {
 	}
 	
 	public void addPayment(double amount, PaymentType paymentType, String bankName, String accountID) {
+		if (amount <= 0) {
+			throw new InvalidAmountException();
+		}
 		transactions.add(new Payment(amount, paymentType, bankName, accountID));
 		update(-amount);
 	}
 	
 	public void addFee(FeeType feeType, double amount) {
+		if (amount <= 0) {
+			throw new InvalidAmountException();
+		}
 		transactions.add(new Fee(feeType, amount));
 		update(amount);
 	}
 	
 	public void update(double amount) {
+		if (amount <= 0) {
+			throw new InvalidAmountException();
+		}
 		currentBalance+=amount;
 		availCredit-=amount;
 	}
@@ -81,7 +81,7 @@ public class CreditCard {
 		if(largestIndex == -1) {
 			throw new NoSuchTransactionException();
 		}else{
-			return (Purchase)transactions.get(largestIndex);
+			return new Purchase((Purchase)transactions.get(largestIndex));
 		}
 	}
 	
@@ -96,11 +96,11 @@ public class CreditCard {
 	}
 	
 	public Purchase getMostRecentPurchase() {
-		return (Purchase)getMostRecent(TransactionType.PURCHASE);
+		return new Purchase((Purchase)getMostRecent(TransactionType.PURCHASE));
 	}
 	
 	public Payment getMostRecentPayment() {
-		return (Payment)getMostRecent(TransactionType.PAYMENT);
+		return new Payment((Payment)getMostRecent(TransactionType.PAYMENT));
 	}
 	
 	private Transaction getMostRecent(TransactionType transactionType) {
@@ -120,6 +120,7 @@ public class CreditCard {
 			return transactions.get(recentIndex);
 		}
 	}
+	
 	public double getTotalPerType(PurchaseType purchaseType) {
 		double sum = 0;
 		for(Transaction transaction: transactions) {
@@ -159,14 +160,15 @@ public class CreditCard {
 		return status;
 	}
 	
-	public void setStatus(String status) {
-		this.status = CreditCardStatus.valueOf(status);
+	public void setStatus(CreditCardStatus status) {
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append("Credit Card Number: "+creditCardID+" Current Balance: "+currentBalance+" Available credit: "+availCredit);
+		str.append("Credit Card Number: " + creditCardID + " Current Balance: " + currentBalance + " Available credit: " + availCredit +
+					"\nExpiration Date: " + expDate + " Credit Card Type: " + creditCardType + " Issue Company: " + issueCompany);
 		return str.toString();
 	}
 

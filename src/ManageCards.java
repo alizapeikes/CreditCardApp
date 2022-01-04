@@ -25,16 +25,16 @@ public class ManageCards {
 					removeCard(keyboard);
 					break;
 				case 3:
-					System.out.println("Total balance: " + cards.totalBalance());
+					System.out.printf("Total balance: $%.2f\n", cards.totalBalance());
 					break;
 				case 4:
-					System.out.println("Total available credit: " + cards.totalAvailCredit());
+					System.out.printf("Total available credit: $%.2f\n", cards.totalAvailCredit());
 					break;
 				case 5:
-					System.out.println("Largest purchase: " + cards.getLargestPurchase());
+					System.out.printf("Largest purchase: $%.2f\n", cards.getLargestPurchase());
 					break;
 				case 6:
-					System.out.println("Most recent payment: " + cards.getMostRecentPayment());
+					System.out.printf("Most recent payment: $%.2f\n", cards.getMostRecentPayment());
 					break;
 				case 7:
 					if (cards.isEmpty()) {
@@ -42,7 +42,7 @@ public class ManageCards {
 					}
 					else {
 						PurchaseType purchaseType = getPurchaseType(keyboard);
-						System.out.println("Total amount spent on " + purchaseType + ": " + cards.getTotalPerType(purchaseType));
+						System.out.printf("Total amount spent on %s: $%.2f\n", purchaseType, cards.getTotalPerType(purchaseType));
 					}
 					break;
 				case 8:
@@ -50,6 +50,7 @@ public class ManageCards {
 					break;
 				case 9:
 					System.out.println("Active cards:\n" + cards.activeCards());
+					break;
 				case 10:
 					cardMenu(keyboard);
 					break;
@@ -91,7 +92,7 @@ public class ManageCards {
 	}
 
 	private void addCard(Scanner keyboard) {
-		System.out.print("Please enter the credit card type: (VISA, MASTERCARD, AMEX, DISCOVER)");
+		System.out.print("Please enter the credit card type: (VISA, MASTERCARD, AMEX, DISCOVER) ");
 		String creditCardType = keyboard.nextLine().toUpperCase();
 		while (!CreditCardType.contains(creditCardType)) {
 			System.out.println("Invalid Credit card type. ");
@@ -99,7 +100,7 @@ public class ManageCards {
 			creditCardType = keyboard.nextLine().toUpperCase();
 		}
 
-		System.out.print("Please enter your credit card number: ");
+		System.out.print("Please enter the credit card number: ");
 		String cardNumber = keyboard.nextLine();
 		while (creditCardType.equalsIgnoreCase("AMEX") && cardNumber.length() != 15) {
 			System.out.println("Invalid Card Number. Card number must have 15 digits.");
@@ -112,6 +113,9 @@ public class ManageCards {
 			cardNumber = keyboard.nextLine();
 		}
 
+		System.out.print("Please enter the issue company: ");
+		String issueCompany = keyboard.nextLine();
+		
 		String issueDate = getDate(keyboard);
 
 		System.out.print("Please enter the credit card limit: ");
@@ -121,7 +125,8 @@ public class ManageCards {
 			cardLimit = keyboard.nextDouble();
 		}
 		keyboard.nextLine();    //Clearing buffer
-		cards.addCard(cardNumber, issueDate, creditCardType, cardLimit);
+		
+		cards.addCard(cardNumber, issueDate, creditCardType, cardLimit, issueCompany);
 	}
 
 	private void removeCard(Scanner keyboard) {
@@ -171,7 +176,6 @@ public class ManageCards {
 				issueDate = keyboard.nextLine();
 			}
 		}
-
 		return issueDate;
 	}
 
@@ -218,10 +222,10 @@ public class ManageCards {
 		System.out.println("\nPlease choose one of the following options: ");
 		System.out.println("1. Display current balance \n2. Display available credit \n"
 				+ "3. Add purchase \n4. Add payment \n5. Add fee \n6. Display most recent purchase \n"
-				+ "7. Display most recent payment \n8. Back to main menu");
-		int choice = keyboard.nextInt();
-		while (choice < 1 || choice > 8) {
-			System.out.println("Invalid choice. Please enter a number from 1-8");
+				+ "7. Display most recent payment \n8. Display status \n9. Change status \n10. Total fees \n11. Back to main menu");
+		int choice = keyboard.nextInt(); 
+		while (choice < 1 || choice > 11) {
+			System.out.println("Invalid choice. Please enter a number from 1-11");
 			choice = keyboard.nextInt();
 		}
 		keyboard.nextLine(); // Clearing buffer
@@ -233,40 +237,85 @@ public class ManageCards {
 			System.out.println("No cards are currently being managed.");
 			return;
 		}
-		System.out.print("Please enter the credit card number: ");
-		String cardNumber = keyboard.nextLine();
-		//CreditCard creditCard = cards.findCard(cardNumber);
-		int choice = 0;
-		while (choice < 9) {
-			choice = displayCardMenu(keyboard);
-			switch (choice) {
-			case 1:
-				System.out.println("Current Balance: " + cards.getCurrentBalance(cardNumber));
-				break;
-			case 2:
-				System.out.println("Available Credit: " + cards.getAvailCredit(cardNumber));
-				break;
-			case 3:
-				addPurchase(keyboard, cardNumber);
-				break;
-			case 4:
-				addPayment(keyboard, cardNumber);
-				break;
-			case 5:
-				addFee(keyboard, cardNumber);
-				break;
-			case 6:
-				System.out.println("Most recent purchase: " + cards.getMostRecentPurchase(cardNumber));
-				break;
-			case 7:
-				System.out.println("Most recent payment: " + cards.getMostRecentPayment(cardNumber));
-				break;
-			case 8:
-				System.out.println("Returning to main menu");
-				break;
+		
+		try {
+			System.out.print("Please enter the credit card number: ");
+			String cardNumber = keyboard.nextLine();
+			int choice = 0;
+			while (choice < 12) {
+				choice = displayCardMenu(keyboard);
+				switch (choice) {
+				case 1:
+					System.out.printf("Current Balance: $%.2f\n", cards.getCurrentBalance(cardNumber));
+					break;
+				case 2:
+					System.out.printf("Available Credit: $%.2f\n", cards.getAvailCredit(cardNumber));
+					break;
+				case 3:
+					addPurchase(keyboard, cardNumber);
+					System.out.println("Purchase added.");
+					break;
+				case 4:
+					addPayment(keyboard, cardNumber);
+					System.out.println("Payment added.");
+					break;
+				case 5:
+					addFee(keyboard, cardNumber);
+					System.out.println("Fee added.");
+					break;
+				case 6:
+					System.out.println("Most recent purchase: " + cards.getMostRecentPurchase(cardNumber));
+					break;
+				case 7:
+					System.out.println("Most recent payment: " + cards.getMostRecentPayment(cardNumber));
+					break;
+				case 8:
+					System.out.println("Status: " + cards.getStatus(cardNumber));
+					break;
+				case 9: 
+					changeStatus(keyboard, cardNumber);
+					System.out.println("Status changed.");
+					break;
+				case 10:
+					System.out.printf("Accrued fees: $%.2f\n" + cards.getTotalFees(cardNumber));
+					break;
+				case 11:
+					System.out.println("Returning to main menu");
+					break;
+				}
 			}
+		}catch(NoSuchCardException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Returning to main menu...");
+			return;
 		}
+	}
 
+	private void changeStatus(Scanner keyboard, String cardNumber) {
+		System.out.print("Please enter a status");
+		System.out.println("\n1. Active\n2. Canceled \n3. Expired \n4. Lost");
+		int choice = keyboard.nextInt();
+		CreditCardStatus status = null;
+		while (choice < 1 || choice > 4) {
+			System.out.println("Invalid entry. Please enter a number between 1 and 4: ");
+			choice = keyboard.nextInt();
+		}
+		keyboard.nextLine(); // Clearing buffer
+		switch (choice) {
+		case 1:
+			status = CreditCardStatus.ACTIVE;
+			break;
+		case 2:
+			status = CreditCardStatus.CANCELED;
+			break;
+		case 3:
+			status = CreditCardStatus.EXPIRED;
+			break;
+		case 4:
+			status = CreditCardStatus.LOST;
+			break;
+		}	
+		cards.changeStatus(cardNumber, status);
 	}
 
 	private void addFee(Scanner keyboard, String cardNumber) {
@@ -316,7 +365,6 @@ public class ManageCards {
 			accountID = keyboard.nextLine();
 		}
 		cards.addPayment(cardNumber, amount, paymentType, bankName, accountID);
-
 	}
 
 	private PaymentType getPaymentType(Scanner keyboard) {
