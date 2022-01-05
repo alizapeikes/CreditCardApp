@@ -52,9 +52,6 @@ public class CreditCard {
 	}
 	
 	public void update(double amount) {
-		if (amount <= 0) {
-			throw new InvalidAmountException();
-		}
 		currentBalance+=amount;
 		availCredit-=amount;
 	}

@@ -2,7 +2,7 @@
 public class InvalidAmountException extends RuntimeException {
 
 	public InvalidAmountException() {
-		super("Invalid amount!");
+		super("Invalid amount.");
 	}
 	
 	public InvalidAmountException(String message) {

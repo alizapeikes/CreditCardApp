@@ -5,6 +5,6 @@ public class NoSuchTransactionException extends RuntimeException{
 	}
 	
 	public NoSuchTransactionException() {
-		super("No such transaction!");
+		super("No such transaction.");
 	}
 }

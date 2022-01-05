@@ -31,10 +31,10 @@ public class ManageCards {
 					System.out.printf("Total available credit: $%.2f\n", cards.totalAvailCredit());
 					break;
 				case 5:
-					System.out.printf("Largest purchase: $%.2f\n", cards.getLargestPurchase());
+					System.out.printf("Largest purchase: %s\n", cards.getLargestPurchase());
 					break;
 				case 6:
-					System.out.printf("Most recent payment: $%.2f\n", cards.getMostRecentPayment());
+					System.out.printf("Most recent payment: %s\n", cards.getMostRecentPayment());
 					break;
 				case 7:
 					if (cards.isEmpty()) {
@@ -60,16 +60,12 @@ public class ManageCards {
 				}
 			} catch (NoCardsExistException | NoSuchCardException e) {
 				System.out.println(e.getMessage());
-				System.out.println("Returning to main menu...");
 			} catch (NoSuchTransactionException e) {
 				System.out.println(e.getMessage());
-				System.out.println("Returning to main menu...");
 			} catch (CardExistsException e) {
 				System.out.println(e.getMessage());
-				System.out.println("Returning to main menu...");
 			} catch (InvalidAmountException e) {
 				System.out.println(e.getMessage());
-				System.out.println("Returning to main menu...");
 			}
 		}
 
@@ -83,7 +79,7 @@ public class ManageCards {
 				+ "8. Display purchase type for which the most money was spent \n"
 				+ "9. Display a list of active credit cards\n10. Manage a specific credit card\n" + "11. Exit");
 		int choice = keyboard.nextInt();
-		while (choice < 0 || choice > 10) {
+		while (choice < 0 || choice > 11) {
 			System.out.println("Invalid choice. Please enter a number from 1-11");
 			choice = keyboard.nextInt();
 		}
@@ -127,6 +123,7 @@ public class ManageCards {
 		keyboard.nextLine();    //Clearing buffer
 		
 		cards.addCard(cardNumber, issueDate, creditCardType, cardLimit, issueCompany);
+		System.out.println("Card added.");
 	}
 
 	private void removeCard(Scanner keyboard) {
@@ -137,6 +134,7 @@ public class ManageCards {
 		System.out.print("Please enter card number to remove: ");
 		String cardNumber = keyboard.nextLine();
 		cards.removeCard(cardNumber);
+		System.out.println("Card removed.");
 	}
 
 	private String getDate(Scanner keyboard) {
@@ -158,16 +156,16 @@ public class ManageCards {
 			int year = Integer.parseInt(issueDate.substring(0, 4));
 			// check if month in range
 			if (month <= 0 || month > 12) {
-				System.out.println("Month must be 1-12");
+				System.out.println("Month must be 1-12.");
 			}
 			// check if day in range for month
 			else if (day <= 0 || (day > daysPerMonth[month] && !(month == 2 && day == 29))) {
-				System.out.println("Day out-of-range for the specified month and year");
+				System.out.println("Day out-of-range for the specified month and year.");
 				// check for leap year if month is 2 and day is 29
 			} else if (month == 2 && day == 29 && !(year % 400 == 0 || (year % 4 == 0 && year % 100 != 0))) {
-				System.out.println("Day out-of-range for the specified month and year");
+				System.out.println("Day out-of-range for the specified month and year.");
 			} else if (LocalDate.parse(issueDate).isAfter(LocalDate.now())) {
-				System.out.println("Invalid date! Date must be equal or before todays date.");
+				System.out.println("Invalid date. Date must be equal or before todays date.");
 			} else {
 				check = false;
 			}
@@ -225,7 +223,7 @@ public class ManageCards {
 				+ "7. Display most recent payment \n8. Display status \n9. Change status \n10. Total fees \n11. Back to main menu");
 		int choice = keyboard.nextInt(); 
 		while (choice < 1 || choice > 11) {
-			System.out.println("Invalid choice. Please enter a number from 1-11");
+			System.out.println("Invalid choice. Please enter a number from 1-11.");
 			choice = keyboard.nextInt();
 		}
 		keyboard.nextLine(); // Clearing buffer
@@ -277,10 +275,10 @@ public class ManageCards {
 					System.out.println("Status changed.");
 					break;
 				case 10:
-					System.out.printf("Accrued fees: $%.2f\n" + cards.getTotalFees(cardNumber));
+					System.out.printf("Accrued fees: $%.2f\n", cards.getTotalFees(cardNumber));
 					break;
 				case 11:
-					System.out.println("Returning to main menu");
+					System.out.println("Returning to main menu...");
 					break;
 				}
 			}
@@ -327,7 +325,7 @@ public class ManageCards {
 	}
 
 	private FeeType getFeeType(Scanner keyboard) {
-		System.out.print("Please enter a fee type");
+		System.out.print("Please enter a fee type:");
 		System.out.print("\n1. Late payment\n2. Interest\n");
 		int choice = keyboard.nextInt();
 		FeeType feeType = null;
@@ -351,7 +349,7 @@ public class ManageCards {
 		System.out.print("Please enter payment amount: ");
 		double amount = keyboard.nextDouble();
 		while (amount <= 0) {
-			System.out.print("Invalid amount! Please enter a value greater than 0: ");
+			System.out.print("Invalid amount. Please enter a value greater than 0: ");
 			amount = keyboard.nextDouble();
 		}
 		keyboard.nextLine();
@@ -368,8 +366,8 @@ public class ManageCards {
 	}
 
 	private PaymentType getPaymentType(Scanner keyboard) {
-		System.out.print("Please enter a payment type:");
-		System.out.print("\n1. Check\n2. Online");
+		System.out.println("Please enter a payment type:");
+		System.out.println("1. Check\n2. Online");
 		int choice = keyboard.nextInt();
 		PaymentType paymentType = null;
 		while (choice < 1 || choice > 2) {
@@ -393,7 +391,7 @@ public class ManageCards {
 		System.out.print("Please enter purchase amount: ");
 		double amount = keyboard.nextDouble();
 		while (amount <= 0) {
-			System.out.print("Invalid purchase amount! Please re-enter amount: ");
+			System.out.print("Invalid purchase amount. Please re-enter amount: ");
 			amount = keyboard.nextDouble();
 		}
 		keyboard.nextLine();

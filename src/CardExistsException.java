@@ -2,7 +2,7 @@
 public class CardExistsException extends RuntimeException {
 
 	public CardExistsException() {
-		super("Card exists!");
+		super("Card already exists.");
 	}
 	
 	public CardExistsException(String message) {

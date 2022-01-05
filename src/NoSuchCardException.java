@@ -5,6 +5,6 @@ public class NoSuchCardException extends RuntimeException {
 	}
 	
 	public NoSuchCardException() {
-		super("No such card exists!");
+		super("No such card exists.");
 	}
 }

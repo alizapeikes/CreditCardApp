@@ -7,7 +7,7 @@ public class Transaction {
 	private TransactionType transactionType;
 	private double amount;
 	
-	public Transaction(LocalDate transactionDate, TransactionType transactionType, double amount ) {
+	public Transaction(LocalDate transactionDate, TransactionType transactionType, double amount) {
 		lastTransactionID++;
 		transcationID = lastTransactionID;
 		this.transactionDate = transactionDate;
@@ -22,15 +22,15 @@ public class Transaction {
 		this.amount = transaction.amount;
 	}
 	/**
-	 * @return the transcationID
+	 * @return the transactionID
 	 */
-	public long getTranscationID() {
+	public long getTransactionID() {
 		return transcationID;
 	}
 	/**
-	 * @param transcationID the transcationID to set
+	 * @param transactionID the transactionID to set
 	 */
-	public void setTranscationID(long transcationID) {
+	public void setTransactionID(long transcationID) {
 		this.transcationID = transcationID;
 	}
 	/**
@@ -88,8 +88,5 @@ public class Transaction {
 		str.append("Date: " + transactionDate + " Amount: " + amount);
 		return str.toString();
 	}
-	
-	
-	
-	
+		
 }

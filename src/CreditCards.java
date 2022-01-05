@@ -75,6 +75,9 @@ public class CreditCards {
 			throw new NoCardsExistException();
 		}
 		CreditCard card = findCard(cardID);
+		if(amount>card.getAvailCredit()) {
+			throw new InvalidAmountException("Insufficient funds.");
+		}
 		card.addPurchase(amount, type, vendorName, street, city, state, zipcode);
 	}
 	
@@ -91,9 +94,6 @@ public class CreditCards {
 			throw new NoCardsExistException();
 		}
 		CreditCard card = findCard(cardID);
-		if(amount>card.getAvailCredit()) {
-			throw new InvalidAmountException("Insufficient funds");
-		}
 		card.addPayment(amount, paymentType, bankName, accountID);
 	}
 	
