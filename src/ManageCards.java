@@ -9,8 +9,8 @@ public class ManageCards {
 	public void start() {
 		overallMenu();
 	}
-	
-	//add set status, get status, and get total fees
+
+	// add set status, get status, and get total fees
 	private void overallMenu() {
 		Scanner keyboard = new Scanner(System.in);
 		int choice = 0;
@@ -39,17 +39,23 @@ public class ManageCards {
 				case 7:
 					if (cards.isEmpty()) {
 						System.out.println("No cards are currently being managed.");
-					}
-					else {
+					} else {
 						PurchaseType purchaseType = getPurchaseType(keyboard);
-						System.out.printf("Total amount spent on %s: $%.2f\n", purchaseType, cards.getTotalPerType(purchaseType));
+						System.out.printf("Total amount spent on %s: $%.2f\n", purchaseType,
+								cards.getTotalPerType(purchaseType));
 					}
 					break;
 				case 8:
 					System.out.println("Category most spent on: " + cards.getMostExpType());
 					break;
 				case 9:
-					System.out.println("Active cards:\n" + cards.activeCards());
+					if (cards.isEmpty()) {
+						System.out.println("No cards are currently being managed.");
+					} else if (cards.activeCards().isEmpty()) {
+						System.out.println("There are no active cards. ");
+					} else {
+						System.out.println("Active cards:\n" + cards.activeCards());
+					}
 					break;
 				case 10:
 					cardMenu(keyboard);
@@ -113,7 +119,7 @@ public class ManageCards {
 
 		System.out.print("Please enter the issue company: ");
 		String issueCompany = keyboard.nextLine();
-		
+
 		String issueDate = getDate(keyboard);
 
 		System.out.print("Please enter the credit card limit: ");
@@ -122,8 +128,8 @@ public class ManageCards {
 			System.out.print("Credit Limit cannot be less than 100. Please enter a valid credit limit: ");
 			cardLimit = keyboard.nextDouble();
 		}
-		keyboard.nextLine();    //Clearing buffer
-		
+		keyboard.nextLine(); // Clearing buffer
+
 		cards.addCard(cardNumber, issueDate, creditCardType, cardLimit, issueCompany);
 		System.out.println("Card added.");
 	}
@@ -223,7 +229,7 @@ public class ManageCards {
 		System.out.println("1. Display current balance \n2. Display available credit \n"
 				+ "3. Add purchase \n4. Add payment \n5. Add fee \n6. Display most recent purchase \n"
 				+ "7. Display most recent payment \n8. Display status \n9. Change status \n10. Total fees \n11. Back to main menu");
-		int choice = keyboard.nextInt(); 
+		int choice = keyboard.nextInt();
 		while (choice < 1 || choice > 11) {
 			System.out.println("Invalid choice. Please enter a number from 1-11.");
 			choice = keyboard.nextInt();
@@ -237,7 +243,7 @@ public class ManageCards {
 			System.out.println("No cards are currently being managed.");
 			return;
 		}
-		
+
 		try {
 			System.out.print("Please enter the credit card number: ");
 			String cardNumber = keyboard.nextLine();
@@ -272,7 +278,7 @@ public class ManageCards {
 				case 8:
 					System.out.println("Status: " + cards.getStatus(cardNumber));
 					break;
-				case 9: 
+				case 9:
 					changeStatus(keyboard, cardNumber);
 					System.out.println("Status changed.");
 					break;
@@ -284,7 +290,7 @@ public class ManageCards {
 					break;
 				}
 			}
-		}catch(NoSuchCardException e) {
+		} catch (NoSuchCardException e) {
 			System.out.println(e.getMessage());
 			System.out.println("Returning to main menu...");
 			return;
@@ -314,7 +320,7 @@ public class ManageCards {
 		case 4:
 			status = CreditCardStatus.LOST;
 			break;
-		}	
+		}
 		cards.changeStatus(cardNumber, status);
 	}
 
@@ -360,7 +366,7 @@ public class ManageCards {
 		String bankName = keyboard.nextLine();
 		System.out.print("Please enter the account number: ");
 		String accountID = keyboard.nextLine();
-		while(accountID.length()<7||accountID.length()>17) {
+		while (accountID.length() < 7 || accountID.length() > 17) {
 			System.out.print("Invalid entry. Please enter a valid account number: ");
 			accountID = keyboard.nextLine();
 		}
@@ -418,5 +424,5 @@ public class ManageCards {
 		}
 		cards.addPurchase(cardNumber, amount, type, vendorName, street, city, state, zipcode);
 	}
-	
+
 }
