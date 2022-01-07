@@ -34,8 +34,8 @@ public class CreditCards {
 		return credit;
 	}
 	
-	public void addCard(String creditCardID,  String issueDate, String creditCardType, double creditCardLimit, String issueCompany) {
-		CreditCard card = new CreditCard(creditCardID, issueDate, creditCardType, creditCardLimit, issueCompany);
+	public void addCard(String creditCardID,  String issueDate, String creditCardType, double creditLimit, String issueCompany) {
+		CreditCard card = new CreditCard(creditCardID, issueDate, creditCardType, creditLimit, issueCompany);
 		if (!cards.contains(card)) {
 			cards.add(card);
 		}

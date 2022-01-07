@@ -8,21 +8,21 @@ public class CreditCard {
 	private String issueCompany;
 	private CreditCardType creditCardType;
 	private CreditCardStatus status;
-	private double creditCardLimit;
+	private double creditLimit;
 	private double currentBalance;
 	private double availCredit;
 	private ArrayList<Transaction> transactions;
 	
-	public CreditCard(String creditCardID, String issueDate, String creditCardType, double creditCardLimit, String issueCompany) {
+	public CreditCard(String creditCardID, String issueDate, String creditCardType, double creditLimit, String issueCompany) {
 		this.creditCardID = creditCardID;
 		this.issueDate = LocalDate.parse(issueDate);
 		this.expDate = this.issueDate.plusYears(3);
 		this.creditCardType = CreditCardType.valueOf(creditCardType);
 		//Assuming you are only inserting credit cards that are active
 		this.status = CreditCardStatus.ACTIVE;
-		this.creditCardLimit = creditCardLimit;
+		this.creditLimit = creditLimit;
 		this.currentBalance = 0;
-		this.availCredit = creditCardLimit;
+		this.availCredit = creditLimit;
 		this.issueCompany = issueCompany;
 		transactions = new ArrayList<>();
 	}
@@ -149,8 +149,8 @@ public class CreditCard {
 		return creditCardID;
 	}
 
-	public double getCreditCardLimit() {
-		return creditCardLimit;
+	public double getCreditLimit() {
+		return creditLimit;
 	}
 	
 	public CreditCardStatus getStatus() {

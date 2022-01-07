@@ -122,15 +122,15 @@ public class ManageCards {
 
 		String issueDate = getDate(keyboard);
 
-		System.out.print("Please enter the credit card limit: ");
-		double cardLimit = keyboard.nextDouble();
-		while (cardLimit < 100) {
+		System.out.print("Please enter the credit limit: ");
+		double creditLimit = keyboard.nextDouble();
+		while (creditLimit < 100) {
 			System.out.print("Credit Limit cannot be less than 100. Please enter a valid credit limit: ");
-			cardLimit = keyboard.nextDouble();
+			creditLimit = keyboard.nextDouble();
 		}
 		keyboard.nextLine(); // Clearing buffer
 
-		cards.addCard(cardNumber, issueDate, creditCardType, cardLimit, issueCompany);
+		cards.addCard(cardNumber, issueDate, creditCardType, creditLimit, issueCompany);
 		System.out.println("Card added.");
 	}
 
