@@ -34,7 +34,7 @@ public class ManageCards {
 					System.out.printf("Largest purchase: %s\n", cards.getLargestPurchase());
 					break;
 				case 6:
-					System.out.printf("Most recent payment: %s\n", cards.getMostRecentPayment());
+					System.out.printf("Most recent payment: %s%n", cards.getMostRecentPayment());
 					break;
 				case 7:
 					if (cards.isEmpty()) {
@@ -65,6 +65,8 @@ public class ManageCards {
 			} catch (CardExistsException e) {
 				System.out.println(e.getMessage());
 			} catch (InvalidAmountException e) {
+				System.out.println(e.getMessage());
+			} catch (MissingFormatArgumentException e) {
 				System.out.println(e.getMessage());
 			}
 		}
@@ -240,7 +242,7 @@ public class ManageCards {
 			System.out.print("Please enter the credit card number: ");
 			String cardNumber = keyboard.nextLine();
 			int choice = 0;
-			while (choice < 12) {
+			while (choice < 11) {
 				choice = displayCardMenu(keyboard);
 				switch (choice) {
 				case 1:
@@ -403,10 +405,10 @@ public class ManageCards {
 		System.out.print("Please enter vendor city: ");
 		String city = keyboard.nextLine();
 		System.out.print("Please enter vendor state: ");
-		String state = keyboard.nextLine();
+		String state = keyboard.nextLine().toUpperCase();
 		while (!USState.contains(state)) {
 			System.out.print("Invalid entry. Please enter a valid state: ");
-			state = keyboard.nextLine();
+			state = keyboard.nextLine().toUpperCase();
 		}
 		System.out.print("Pleae enter vendor zip code(5 digits only): ");
 		String zipcode = keyboard.nextLine();
