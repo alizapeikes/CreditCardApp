@@ -23,7 +23,7 @@ public class Payment extends Transaction{
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append(super.toString() + " Payment Type: " + paymentType);
+		str.append(super.toString() + "\tPayment Type: " + paymentType);
 		str.append("\nAccount Information: " + account);
 		return str.toString();
 	}

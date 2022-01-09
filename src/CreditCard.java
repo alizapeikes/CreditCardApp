@@ -164,8 +164,8 @@ public class CreditCard {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append("Credit Card Number: " + creditCardID + " Current Balance: " + currentBalance + " Available credit: " + availCredit +
-					"\nExpiration Date: " + expDate + " Credit Card Type: " + creditCardType + " Issue Company: " + issueCompany);
+		str.append("Credit Card Number: " + creditCardID + "\tCurrent Balance: " + currentBalance + "\tAvailable credit: " + availCredit +
+					"\nExpiration Date: " + expDate + "\tCredit Card Type: " + creditCardType + "\tIssue Company: " + issueCompany);
 		return str.toString();
 	}
 

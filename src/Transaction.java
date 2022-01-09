@@ -85,7 +85,7 @@ public class Transaction {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append("Date: " + transactionDate + " Amount: " + amount);
+		str.append("Date: " + transactionDate + "\tAmount: " + amount);
 		return str.toString();
 	}
 		

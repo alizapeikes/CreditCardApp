@@ -11,7 +11,7 @@ public class BankAccount {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append("Name: " + bankName + " AccountID: " + accountID);
+		str.append("Name: " + bankName + "\tAccountID: " + accountID);
 		return str.toString();
 	}
 }

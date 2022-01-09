@@ -30,7 +30,7 @@ public class Purchase extends Transaction {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append(super.toString() + " Purchase type: " + purchaseType + "\nVendor Information:\n" + vendor);
+		str.append(super.toString() + "\tPurchase type: " + purchaseType + "\nVendor Information:\n" + vendor);
 		return str.toString();
 	}
 }

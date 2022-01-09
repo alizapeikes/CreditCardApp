@@ -15,7 +15,7 @@ public class Fee extends Transaction{
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		str.append(super.toString() + " Fee Type: " + feeType);
+		str.append(super.toString() + "\tFee Type: " + feeType);
 		return str.toString();
 	}
 }
