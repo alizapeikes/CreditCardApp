@@ -108,7 +108,7 @@ public class CreditCards {
 			CreditCard temp = cards.get(i);
 			if (temp.getLargestPurchase() == null) {
 				continue;
-			} else if (temp.getLargestPurchase().getAmount() > largestPurchase.getAmount()) {
+			} else if (largestPurchase == null || temp.getLargestPurchase().getAmount() > largestPurchase.getAmount()) {
 				largestPurchase = temp.getLargestPurchase();
 			}
 		}
@@ -122,12 +122,12 @@ public class CreditCards {
 		if (cards.isEmpty()) {
 			throw new NoCardsExistException();
 		}
-		Payment mostRecent = cards.get(0).getMostRecentPayment();
-		for (int i = 1; i < cards.size(); i++) {
+		Payment mostRecent = null;
+		for (int i = 0; i < cards.size(); i++) {
 			CreditCard temp = cards.get(i);
 			if (temp.getMostRecentPayment() == null) {
 				continue;
-			} else if (temp.getMostRecentPayment().getTransactionDate().isAfter(mostRecent.getTransactionDate())) {
+			} else if (mostRecent == null || temp.getMostRecentPayment().getTransactionDate().isAfter(mostRecent.getTransactionDate())) {
 				mostRecent = temp.getMostRecentPayment();
 			}
 		}

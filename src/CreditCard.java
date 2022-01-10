@@ -102,14 +102,25 @@ public class CreditCard {
 	}
 	
 	public Purchase getMostRecentPurchase() {
-		return new Purchase((Purchase)getMostRecent(TransactionType.PURCHASE));
+		Transaction purch = getMostRecent(TransactionType.PURCHASE);
+		if (purch == null) {
+			return null;
+		}
+		return new Purchase((Purchase)purch);
 	}
 	
 	public Payment getMostRecentPayment() {
-		return new Payment((Payment)getMostRecent(TransactionType.PAYMENT));
+		Transaction pmnt = getMostRecent(TransactionType.PAYMENT);
+		if (pmnt == null) {
+			return null;
+		}
+		return new Payment((Payment)pmnt);
 	}
 	
 	private Transaction getMostRecent(TransactionType transactionType) {
+		if (transactions.isEmpty()) {
+			return null;
+		}
 		LocalDate mostRecent = LocalDate.MIN;
 		int recentIndex = - 1;
 		for(int i = 0; i < transactions.size(); i++) {
