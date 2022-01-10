@@ -85,8 +85,8 @@ public class CreditCard {
 			}
 		}
 		if(largestIndex == -1) {
-			throw new NoSuchTransactionException();
-		}else{
+			return null;
+		} else {
 			return new Purchase((Purchase)transactions.get(largestIndex));
 		}
 	}
@@ -121,7 +121,7 @@ public class CreditCard {
 			}
 		}
 		if(recentIndex == -1) {
-			throw new NoSuchTransactionException();
+			return null;
 		}else {
 			return transactions.get(recentIndex);
 		}
