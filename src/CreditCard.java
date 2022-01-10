@@ -31,6 +31,9 @@ public class CreditCard {
 		if (amount <= 0 || amount > availCredit) {
 			throw new InvalidAmountException();
 		}
+		if (!this.status.equals(CreditCardStatus.ACTIVE)){
+			throw new InactiveCardException();
+		}
 		transactions.add(new Purchase(amount, type, vendorName, street, city, state, zipcode));
 		update(amount);
 	}
@@ -39,6 +42,9 @@ public class CreditCard {
 		if (amount <= 0) {
 			throw new InvalidAmountException();
 		}
+		if (!this.status.equals(CreditCardStatus.ACTIVE)){
+			throw new InactiveCardException();
+		}
 		transactions.add(new Payment(amount, paymentType, bankName, accountID));
 		update(-amount);
 	}
@@ -46,6 +52,9 @@ public class CreditCard {
 	public void addFee(FeeType feeType, double amount) {
 		if (amount <= 0) {
 			throw new InvalidAmountException();
+		}
+		if (!this.status.equals(CreditCardStatus.ACTIVE)){
+			throw new InactiveCardException();
 		}
 		transactions.add(new Fee(feeType, amount));
 		update(amount);

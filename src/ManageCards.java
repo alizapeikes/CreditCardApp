@@ -259,15 +259,12 @@ public class ManageCards {
 					break;
 				case 3:
 					addPurchase(keyboard, cardNumber);
-					System.out.println("Purchase added.");
 					break;
 				case 4:
 					addPayment(keyboard, cardNumber);
-					System.out.println("Payment added.");
 					break;
 				case 5:
 					addFee(keyboard, cardNumber);
-					System.out.println("Fee added.");
 					break;
 				case 6:
 					System.out.println("Most recent purchase: " + cards.getMostRecentPurchase(cardNumber));
@@ -291,6 +288,10 @@ public class ManageCards {
 				}
 			}
 		} catch (NoSuchCardException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Returning to main menu...");
+			return;
+		} catch (InactiveCardException e) {
 			System.out.println(e.getMessage());
 			System.out.println("Returning to main menu...");
 			return;
@@ -329,7 +330,9 @@ public class ManageCards {
 		double amount = keyboard.nextDouble();
 		keyboard.nextLine();
 		FeeType feeType = getFeeType(keyboard);
+		
 		cards.addFee(cardNumber, feeType, amount);
+		System.out.println("Fee added.");
 	}
 
 	private FeeType getFeeType(Scanner keyboard) {
@@ -371,6 +374,7 @@ public class ManageCards {
 			accountID = keyboard.nextLine();
 		}
 		cards.addPayment(cardNumber, amount, paymentType, bankName, accountID);
+		System.out.println("Payment added.");
 	}
 
 	private PaymentType getPaymentType(Scanner keyboard) {
@@ -379,7 +383,7 @@ public class ManageCards {
 		int choice = keyboard.nextInt();
 		PaymentType paymentType = null;
 		while (choice < 1 || choice > 2) {
-			System.out.print("Invalid entry. Please enter a number between 1 and 2");
+			System.out.print("Invalid entry. Please enter a number between 1 and 2: ");
 			choice = keyboard.nextInt();
 		}
 		keyboard.nextLine(); // Clearing buffer
@@ -423,6 +427,7 @@ public class ManageCards {
 			zipcode = keyboard.nextLine();
 		}
 		cards.addPurchase(cardNumber, amount, type, vendorName, street, city, state, zipcode);
+		System.out.println("Purchase added.");
 	}
 
 }
