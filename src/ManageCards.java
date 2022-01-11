@@ -66,14 +66,19 @@ public class ManageCards {
 				}
 			} catch (NoCardsExistException | NoSuchCardException e) {
 				System.out.println(e.getMessage());
+				System.out.println("Returning to main menu...");
 			} catch (NoSuchTransactionException e) {
 				System.out.println(e.getMessage());
+				System.out.println("Returning to main menu...");
 			} catch (CardExistsException e) {
 				System.out.println(e.getMessage());
+				System.out.println("Returning to main menu...");
 			} catch (InvalidAmountException e) {
 				System.out.println(e.getMessage());
+				System.out.println("Returning to main menu...");
 			} catch (MissingFormatArgumentException e) {
 				System.out.println(e.getMessage());
+				System.out.println("Returning to main menu...");
 			}
 		}
 
